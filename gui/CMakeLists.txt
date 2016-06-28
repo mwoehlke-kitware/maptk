@@ -22,6 +22,8 @@ include_directories(
   ${MAPTK_BINARY_DIR}
 )
 
+set(CMAKE_AUTOMOC ON)
+
 set(gui_am_ui
   CameraView.ui
   MainWindow.ui
@@ -104,7 +106,6 @@ configure_file(
 )
 
 qt4_wrap_ui(gui_ui_sources ${gui_ui})
-qt4_wrap_cpp(gui_moc_sources ${gui_moc_headers})
 qt4_add_resources(gui_res_sources ${gui_resources})
 
 qte_amc_wrap_ui(gui_amc_sources ActionManagerDialog ${gui_am_ui})
@@ -124,7 +125,6 @@ kwiver_add_executable(mapgui
   WIN32 MACOSX_BUNDLE
   ${gui_sources}
   ${gui_ui_sources}
-  ${gui_moc_sources}
   ${gui_res_sources}
   ${gui_amc_sources}
   ${gui_icon_source}
