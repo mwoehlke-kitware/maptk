@@ -28,6 +28,8 @@
     <file alias="landmark@2x">16x16@2/landmark.png</file>
     <file alias="location">16x16/location.png</file>
     <file alias="location@2x">16x16@2/location.png</file>
+    <file alias="mesh">16x16/mesh.png</file>
+    <file alias="mesh@2x">16x16@2/mesh.png</file>
     <file alias="open">16x16/open.png</file>
     <file alias="open@2x">16x16@2/open.png</file>
     <file alias="playback-loop">16x16/playback-loop.png</file>
@@ -82,6 +84,8 @@
     <file alias="landmark@2x">22x22@2/landmark.png</file>
     <file alias="location">22x22/location.png</file>
     <file alias="location@2x">22x22@2/location.png</file>
+    <file alias="mesh">22x22/mesh.png</file>
+    <file alias="mesh@2x">22x22@2/mesh.png</file>
     <file alias="open">22x22/open.png</file>
     <file alias="open@2x">22x22@2/open.png</file>
     <file alias="playback-loop">22x22/playback-loop.png</file>
