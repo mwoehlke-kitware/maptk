@@ -91,6 +91,7 @@ public slots:
 
   void setImagePath(QString const&);
   void setImageData(vtkImageData* data, QSize dimensions);
+  void setMeshImageData(vtkImageData* data, QSize dimensions);
 
   void setLandmarksData(kwiver::vital::landmark_map const&);
 
@@ -116,6 +117,7 @@ public slots:
 
 protected slots:
   void setImageVisible(bool);
+  void setMeshImageVisible(bool);
   void setLandmarksVisible(bool);
   void setResidualsVisible(bool);
   void setOutlierResidualsVisible(bool);

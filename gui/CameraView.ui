@@ -31,6 +31,7 @@
      <addaction name="actionViewReset"/>
      <addaction name="separator"/>
      <addaction name="actionShowFrameImage"/>
+     <addaction name="actionShowMeshImage"/>
      <addaction name="actionShowFeatures"/>
      <addaction name="actionShowLandmarks"/>
      <addaction name="actionShowResiduals"/>
@@ -196,7 +197,7 @@
     <string>Image</string>
    </property>
    <property name="toolTip">
-    <string>Toggle visibility of the camera frame image (projected to the ground plane)</string>
+    <string>Toggle visibility of the camera frame image</string>
    </property>
    <property name="shortcut">
     <string>I</string>
@@ -229,6 +230,27 @@
   <action name="actionComputeCamera">
    <property name="text">
     <string>Compute Camera</string>
+   </property>
+  </action>
+  <action name="actionShowMeshImage">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/22x22/mesh</normaloff>:/icons/22x22/mesh</iconset>
+   </property>
+   <property name="text">
+    <string>Show Rendered Mesh</string>
+   </property>
+   <property name="iconText">
+    <string>Image</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle visibility of the mesh rendered from the camera POV</string>
+   </property>
+   <property name="shortcut">
+    <string>M</string>
    </property>
   </action>
  </widget>

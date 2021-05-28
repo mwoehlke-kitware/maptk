@@ -219,6 +219,7 @@ public:
   vtkSmartPointer<vtkRenderWindow> renderWindow;
 
   vtkNew<vtkImageActor> imageActor;
+  vtkNew<vtkImageActor> meshImageActor;
   vtkNew<vtkImageData> emptyImage;
 
   vtkNew<vtkMaptkFeatureTrackRepresentation> featureRep;
@@ -454,6 +455,13 @@ CameraView::CameraView(QWidget* parent, Qt::WindowFlags flags)
   connect(imageOptions, &ImageOptions::modified,
           this, &CameraView::render);
 
+  auto const meshOptions = new ImageOptions("CameraView/Mesh", this);
+  meshOptions->addActor(d->meshImageActor);
+  d->setPopup(d->UI.actionShowMeshImage, meshOptions);
+
+  connect(meshOptions, &ImageOptions::modified,
+          this, &CameraView::render);
+
   auto const featureOptions =
     new FeatureOptions{d->featureRep, "CameraView/FeaturePoints", this};
 
@@ -529,6 +537,8 @@ CameraView::CameraView(QWidget* parent, Qt::WindowFlags flags)
 
   connect(d->UI.actionShowFrameImage, &QAction::toggled,
           this, &CameraView::setImageVisible);
+  connect(d->UI.actionShowMeshImage, &QAction::toggled,
+          this, &CameraView::setMeshImageVisible);
   connect(d->UI.actionShowFeatures, &QAction::toggled,
           featureOptions, &FeatureOptions::setFeaturesWithDescVisible);
   connect(d->UI.actionShowFeatures, &QAction::toggled,
@@ -575,6 +585,8 @@ CameraView::CameraView(QWidget* parent, Qt::WindowFlags flags)
 
   d->renderer->AddViewProp(d->imageActor);
   d->imageActor->SetPosition(0.0, 0.0, -0.5);
+  d->renderer->AddViewProp(d->meshImageActor);
+  d->meshImageActor->SetPosition(0.0, 0.0, -0.3);
 
   // Enable antialising by default
   d->renderer->UseFXAAOn();
@@ -585,6 +597,7 @@ CameraView::CameraView(QWidget* parent, Qt::WindowFlags flags)
   d->emptyImage->SetScalarComponentFromDouble(0, 0, 0, 0, 0.0);
 
   this->setImageData(nullptr, QSize{1, 1});
+  this->setMeshImageData(nullptr, QSize{1, 1});
 }
 
 //-----------------------------------------------------------------------------
@@ -632,6 +645,26 @@ void CameraView::setImageData(vtkImageData* data, QSize dimensions)
     d->imageActor->GetBounds(d->imageBounds);
     auto const h = d->imageBounds[3] + 1 - d->imageBounds[2];
     d->setTransforms(qMax(0, static_cast<int>(h)));
+  }
+
+  this->render();
+}
+
+//-----------------------------------------------------------------------------
+void CameraView::setMeshImageData(vtkImageData* data, QSize dimensions)
+{
+  QTE_D();
+
+  if (!data)
+  {
+    // If no image given, clear current image and replace with "empty" image
+    d->meshImageActor->SetInputData(d->emptyImage);
+  }
+  else
+  {
+    // Set data on image actor
+    d->meshImageActor->SetInputData(data);
+    d->meshImageActor->Update();
   }
 
   this->render();
@@ -801,6 +834,15 @@ void CameraView::setImageVisible(bool state)
   QTE_D();
 
   d->imageActor->SetVisibility(state);
+  this->render();
+}
+
+//-----------------------------------------------------------------------------
+void CameraView::setMeshImageVisible(bool state)
+{
+  QTE_D();
+
+  d->meshImageActor->SetVisibility(state);
   this->render();
 }
 
